@@ -1,16 +1,52 @@
 {
   "name": "circleci_build_watcher",
-  "version": "1.0.0",
-  "description": "Watch CircleCI Builds without the extra tabs in chrome.",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "electron src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "electron-builder",
-    "build": "electron-builder"
-  },
   "author": "Noah Halstead",
   "license": "MIT",
+  "version": "1.0.0",
+  "description": "Watch CircleCI Builds without the extra tabs in chrome.",
+  "main": "public/electron.js",
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "electron-updater": "^4.2.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "wait-on": "^4.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.0",
+    "cross-env": "^5.2.0",
+    "electron": "^8.2.0",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-is-dev": "^1.1.0",
+    "electron-builder": "^22.4.1"
+  },
+  "scripts": {
+    "web-start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start": "concurrently \"cross-env BROWSER=none PORT=3933 yarn react-scripts start\" \"wait-on http://localhost:3933 && electron .\"",
+    "pack": "electron-builder --dir",
+    "dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "build": {
     "appId": "nhalstead.circleciWatcher",
     "productName": "CircleCI Build Watcher",
@@ -27,10 +63,5 @@
         "url": "https://updates.nhalstead.me"
       }
     ]
-  },
-  "dependencies": {
-    "electron": "^8.2.0",
-    "electron-builder": "^22.4.1",
-    "electron-updater": "^4.2.5"
   }
 }
