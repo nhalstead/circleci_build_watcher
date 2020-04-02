@@ -56,42 +56,6 @@ class App extends Component {
 					repo={"testing123"}
 					buildNumber={"340"}
 				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
 			</div>
 		);
 	}

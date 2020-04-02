@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import failedIcon from './failed.svg';
+import canceledIcon from './canceled.svg';
 import succeededIcon from './succeeded.svg';
 import runningIcon from './running.svg';
 import waitingIcon from './waiting.svg';
@@ -26,7 +27,7 @@ class BuildCard extends Component {
 		else if(status === "canceled") {
 			statusCss = "canceled";
 			statusText = "Canceled";
-			statusIcon = failedIcon;
+			statusIcon = canceledIcon;
 		}
 		else if(status === "running") {
 			statusCss = "running";
