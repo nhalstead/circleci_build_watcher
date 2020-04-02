@@ -8,7 +8,7 @@ import unknownIcon from './unknown.svg';
 class BuildCard extends Component {
 
 	render() {
-		const {status, org, repo, buildNumber, author, authorIcon} = this.props;
+		const {status, org, repo, buildNumber, author, authorIcon, link} = this.props;
 		let statusCss = "unknown";
 		let statusText = "Unknown";
 		let statusIcon = unknownIcon;
@@ -48,14 +48,14 @@ class BuildCard extends Component {
 				<div className="status-area" style={{paddingTop: "8px"}}>
 					<div className="user-icon" data-component="frontend.components.pieces.status/badge">
 						<div className="status-icon">
-							<img src={authorIcon || unknownIcon} className="dashboard-icon" />
+							<img src={authorIcon || unknownIcon} className="dashboard-icon" alt={"User Avatar: " + author} />
 						</div>
 						<div className="badge-label">{ author || <i>unknown</i>}</div>
 					</div>
-					<a href="https://circleci.com/gh/securecoders/sd-api/313" target="_blank" style={{display: "inline-block"}}>
+					<a href={link || "https://circleci.com"} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block"}}>
 						<div title={statusText} className={statusCss} data-component="frontend.components.pieces.status/badge">
 							<div className="status-icon" style={{paddingTop: "4px"}}>
-								<img src={statusIcon} className="css-1rozygh"/>
+								<img src={statusIcon} className="css-1rozygh" alt={"Status: " + statusText}/>
 							</div>
 							<div className="badge-label">{ statusText } #{ buildNumber }</div>
 						</div>
