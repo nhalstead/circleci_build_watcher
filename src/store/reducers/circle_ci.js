@@ -6,6 +6,7 @@ import {
 
 const initialState = {
 	events: [],
+	error: null,
 	loading: false,
 	failed: false
 };
@@ -16,9 +17,9 @@ export default (state = initialState, action) => {
 		case GET_CIRCLE_EVENTS:
 			return {...state, loading: true, failed: false}
 		case GET_CIRCLE_EVENTS_SUCCESS:
-			return {...state, result: action.payload, loading: false}
+			return {...state, events: action.payload, loading: false}
 		case GET_CIRCLE_EVENTS_FAIL:
-			return {...state, result: action.payload, loading: false, failed: true}
+			return {...state, error: action.payload, loading: false, failed: true}
 
 		default:
 			return state;
