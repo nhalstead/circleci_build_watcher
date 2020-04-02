@@ -2,60 +2,48 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import BuildCard from "./components/BuildCard";
 import './App.css';
-import {getCircleEvents} from "../store/actions/circle_ci";
+import {getCircleEvents, getEventsFromConfig} from "../store/actions/circle_ci";
+import _ from "lodash";
 
 class App extends Component {
 
 	componentDidMount() {
 
-		this.props.getCircleEvents();
+		this.getEventsFromConfig();
 
 		setInterval(() => {
-			this.props.getCircleEvents();
-		}, 5000)
+			this.getEventsFromConfig();
+		}, 10000)
 
 	}
 
+	getEventsFromConfig = () => {
+
+		const configs = [
+		];
+		this.props.getEventsFromConfig(configs);
+	}
+
 	render() {
+		const {events} = this.props;
+
 		return (
 			<div id="content">
-				<BuildCard
-					status={"succeeded"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"342"}
-					author={"nhalstead"}
-					authorIcon={"https://avatars3.githubusercontent.com/u/5577816?s=40&amp;v=4"}
-				/>
-				<BuildCard
-					status={"failed"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"341"}
-				/>
-				<BuildCard
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"341"}
-				/>
-				<BuildCard
-					status={"canceled"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"running"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
-				<BuildCard
-					status={"waiting"}
-					org={"nhalstead"}
-					repo={"testing123"}
-					buildNumber={"340"}
-				/>
+				{events.map(event => {
+					return (
+						<BuildCard
+							key={`card-${event.organization}-${event.repository}-${event.number}`}
+							status={event.status}
+							org={event.organization}
+							repo={event.repository}
+							buildNumber={event.number}
+							author={event.username}
+							authorIcon={event.logo}
+							timestamp={event.timestamp}
+							link={`https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/${event.number}/workflows/${event.workflow}/jobs/${event.number}`}
+						/>
+					)
+				})}
 			</div>
 		);
 	}
@@ -63,11 +51,12 @@ class App extends Component {
 
 
 const mapStateToProps = (state) => ({
-
+	events: state.circle_ci.events,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getCircleEvents: () => dispatch(getCircleEvents())
+	getCircleEvents: () => dispatch(getCircleEvents()),
+	getEventsFromConfig: (conf) => dispatch(getEventsFromConfig(conf)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
