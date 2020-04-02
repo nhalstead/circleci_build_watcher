@@ -5,16 +5,17 @@ import succeededIcon from './succeeded.svg';
 import runningIcon from './running.svg';
 import waitingIcon from './waiting.svg';
 import unknownIcon from './unknown.svg';
+import moment from "moment";
 
 class BuildCard extends Component {
 
 	render() {
-		const {status, org, repo, buildNumber, author, authorIcon, link} = this.props;
+		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp} = this.props;
 		let statusCss = "unknown";
 		let statusText = "Unknown";
 		let statusIcon = unknownIcon;
 
-		if(status === "succeeded") {
+		if(status === "success") {
 			statusCss = "succeeded";
 			statusText = "Success";
 			statusIcon = succeededIcon;
@@ -61,6 +62,11 @@ class BuildCard extends Component {
 							<div className="badge-label">{ statusText } #{ buildNumber }</div>
 						</div>
 					</a>
+					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
+						<span style={{color: "gray", fontSize: "12px"}}>
+							{ moment(timestamp).fromNow() }
+						</span>
+					</div>
 				</div>
 			</div>
 		)
