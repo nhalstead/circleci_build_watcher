@@ -1,6 +1,7 @@
 const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell} = require('electron');
-const {autoUpdater} = require("electron-updater");
+const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
+const _ = require('lodash');
 let mainWindow, tray;
 
 // @link https://getstream.io/blog/takeaways-on-building-a-react-based-app-with-electron/
@@ -120,6 +121,11 @@ function createWindow() {
 		event.preventDefault();
 		shell.openExternal(url);
 	});
+
+	mainWindow.on('resize', _.debounce(() => {
+		const winHeight = mainWindow.getSize()[1];
+		mainWindow.setSize(width, winHeight, true);
+	}, 100));
 }
 
 
