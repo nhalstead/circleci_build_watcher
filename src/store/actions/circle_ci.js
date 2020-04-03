@@ -32,10 +32,30 @@ export const getEventsFromConfig = (configs) => {
 			.then(resp => {
 				if(resp) {
 					let data = _.flatten(resp);
-					data = _.sortBy(data, ['start_time']);
-					// Allow only entries from the last 4 hours to be displayed
-					data = _.filter(data, elm => (moment().unix() - moment(elm.start_time).unix()) < (60 * 60 * 4));
-					data = _.reverse(data);
+
+					// Sort to put null dates at the top followed by the start time
+					data = data.sort((a, b) => {
+						if(a.start_time === null) return -1;
+						if(b.start_time === null) return 1;
+
+						a = moment(a.start_time).unix();
+						b = moment(b.start_time).unix();
+
+						if (a > b) {
+							return -1;
+						} else if (b > a) {
+							return 1;
+						} else {
+							return 0;
+						}
+					});
+
+					// Allow only entries from the last 4 hours to be displayed, or has no Start Time
+					data = _.filter(data, elm => {
+						if(elm.start_time === null) return true;
+						return (moment().unix() - moment(elm.start_time).unix()) < (60 * 60 * 4)
+					});
+
 					data = data.map(entry => {
 						// Convert this CircleCi Status into a Friendly Status Entry
 						return {
@@ -51,6 +71,8 @@ export const getEventsFromConfig = (configs) => {
 							number: entry.build_num,
 							workflow: entry.workflows.workflow_id,
 							buildUrl: entry.build_url,
+							isPullRequests: (entry.pull_requests.length !== 0),
+							pullRequest: (entry.pull_requests.length !== 0) ? entry.pull_requests[0] : null,
 						}
 					})
 					dispatch({type: GET_CIRCLE_EVENTS_SUCCESS, payload: data})

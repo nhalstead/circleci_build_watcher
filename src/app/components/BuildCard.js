@@ -5,12 +5,13 @@ import succeededIcon from './succeeded.svg';
 import runningIcon from './running.svg';
 import waitingIcon from './waiting.svg';
 import unknownIcon from './unknown.svg';
+import {ReactComponent as PullRequest} from './pull_request.svg';
 import moment from "moment";
 
 class BuildCard extends Component {
 
 	render() {
-		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp, branch} = this.props;
+		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp, branch, isPullRequest, pullRequest} = this.props;
 		let statusCss = "unknown";
 		let statusText = "Unknown";
 		let statusIcon = unknownIcon;
@@ -35,7 +36,7 @@ class BuildCard extends Component {
 			statusText = "Running";
 			statusIcon = runningIcon;
 		}
-		else if(status === "waiting") {
+		else if(status === "waiting" || status === "not_running") {
 			statusCss = "waiting";
 			statusText = "Queued";
 			statusIcon = waitingIcon;
@@ -65,6 +66,15 @@ class BuildCard extends Component {
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
 						<span style={{color: "gray", fontSize: "12px"}}>
 							{ moment(timestamp).fromNow() } on  { branch }
+							{isPullRequest && (
+								<a href={pullRequest.url} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block", paddingLeft: "4px", position: "relative", top: "4px"}}>
+									<PullRequest
+										fill={"gray"}
+										height={"18px"}
+										width={"18px"}
+									/>
+								</a>
+							)}
 						</span>
 					</div>
 				</div>

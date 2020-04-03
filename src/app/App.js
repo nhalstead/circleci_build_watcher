@@ -43,6 +43,8 @@ class App extends Component {
 								author={event.username}
 								authorIcon={event.logo}
 								timestamp={event.timestamp}
+								isPullRequest={event.isPullRequests}
+								pullRequest={event.pullRequest}
 								link={`https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/${event.number}/workflows/${event.workflow}/jobs/${event.number}`}
 							/>
 						)
