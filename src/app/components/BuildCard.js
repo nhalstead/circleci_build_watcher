@@ -10,7 +10,7 @@ import moment from "moment";
 class BuildCard extends Component {
 
 	render() {
-		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp} = this.props;
+		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp, branch} = this.props;
 		let statusCss = "unknown";
 		let statusText = "Unknown";
 		let statusIcon = unknownIcon;
@@ -64,7 +64,7 @@ class BuildCard extends Component {
 					</a>
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
 						<span style={{color: "gray", fontSize: "12px"}}>
-							{ moment(timestamp).fromNow() }
+							{ moment(timestamp).fromNow() } on  { branch }
 						</span>
 					</div>
 				</div>

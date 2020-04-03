@@ -38,6 +38,7 @@ class App extends Component {
 								status={event.status}
 								org={event.organization}
 								repo={event.repository}
+								branch={event.branch}
 								buildNumber={event.number}
 								author={event.username}
 								authorIcon={event.logo}
