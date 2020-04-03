@@ -4,6 +4,7 @@ import BuildCard from "./components/BuildCard";
 import './App.css';
 import {getCircleEvents, getEventsFromConfig} from "../store/actions/circle_ci";
 import _ from "lodash";
+import EmptyCard from "./components/EmptyCard";
 
 class App extends Component {
 
@@ -29,21 +30,27 @@ class App extends Component {
 
 		return (
 			<div id="content">
-				{events.map(event => {
-					return (
-						<BuildCard
-							key={`card-${event.organization}-${event.repository}-${event.number}`}
-							status={event.status}
-							org={event.organization}
-							repo={event.repository}
-							buildNumber={event.number}
-							author={event.username}
-							authorIcon={event.logo}
-							timestamp={event.timestamp}
-							link={`https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/${event.number}/workflows/${event.workflow}/jobs/${event.number}`}
-						/>
-					)
-				})}
+				{events.length !== 0 ? (
+					events.map(event => {
+						return (
+							<BuildCard
+								key={`card-${event.organization}-${event.repository}-${event.number}`}
+								status={event.status}
+								org={event.organization}
+								repo={event.repository}
+								buildNumber={event.number}
+								author={event.username}
+								authorIcon={event.logo}
+								timestamp={event.timestamp}
+								link={`https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/${event.number}/workflows/${event.workflow}/jobs/${event.number}`}
+							/>
+						)
+					})
+				) : (
+					<EmptyCard
+						message={"No builds to show in the last 4 hours."}
+					/>
+				)}
 			</div>
 		);
 	}
