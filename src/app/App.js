@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import BuildCard from "./components/BuildCard";
 import './App.css';
 import {getCircleEvents, getEventsFromConfig} from "../store/actions/circle_ci";
-import _ from "lodash";
 import EmptyCard from "./components/EmptyCard";
 
 class App extends Component {
