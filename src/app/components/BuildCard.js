@@ -10,6 +10,11 @@ import moment from "moment";
 
 class BuildCard extends Component {
 
+	grabEnd = (input, length) => {
+		if(input.length > length) return  "..." + input.substring(input.length - (length - 3));
+		return input;
+	}
+
 	render() {
 		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp, branch, isPullRequest, pullRequest} = this.props;
 		let statusCss = "unknown";
@@ -36,7 +41,7 @@ class BuildCard extends Component {
 			statusText = "Running";
 			statusIcon = runningIcon;
 		}
-		else if(status === "waiting" || status === "not_running") {
+		else if(status === "waiting" || status === "not_running" || status === "none") {
 			statusCss = "waiting";
 			statusText = "Queued";
 			statusIcon = waitingIcon;
@@ -65,7 +70,7 @@ class BuildCard extends Component {
 					</a>
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
 						<span style={{color: "gray", fontSize: "12px"}}>
-							{ moment(timestamp).fromNow() } on  { branch }
+							{ moment(timestamp).fromNow() } on  { this.grabEnd(branch, 25) }
 							{isPullRequest && (
 								<a href={pullRequest.url} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block", paddingLeft: "4px", position: "relative", top: "4px"}}>
 									<PullRequest
