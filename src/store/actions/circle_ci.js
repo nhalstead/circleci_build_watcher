@@ -1,3 +1,4 @@
+import {configStore} from "../../constants/store.js";
 import _ from "lodash";
 import moment from "moment";
 
@@ -5,15 +6,32 @@ export const GET_CIRCLE_EVENTS = "GET_CIRCLE_EVENTS";
 export const GET_CIRCLE_EVENTS_SUCCESS = "GET_CIRCLE_EVENTS_SUCCESS";
 export const GET_CIRCLE_EVENTS_FAIL = "GET_CIRCLE_EVENTS_FAIL";
 
-export const getCircleEvents = () => {
+export const SET_CIRCLE_CONFIG = "SET_CIRCLE_CONFIG";
+export const ERROR_LOADING_CONFIG = "ERROR_LOADING_CONFIG";
+
+export const getEventsFromConfig = () => {
 	return (dispatch, getState) => {
+		const config = getState().circle_ci.config;
 
-		dispatch({type: GET_CIRCLE_EVENTS})
-		dispatch({type: GET_CIRCLE_EVENTS_SUCCESS})
-
+		if(!config || config.length === 0) {
+			// Load Config
+			configStore.get("endpoints")
+				.then((configReceived) => {
+					console.log(configReceived);
+					if(!configReceived || configReceived.length === 0) {
+						dispatch({type: ERROR_LOADING_CONFIG, payload: "Failed to load config", configReceived});
+					}
+					dispatch({type: SET_CIRCLE_CONFIG, payload: configReceived});
+					dispatch(getEvents(configReceived));
+				});
+		}
+		else {
+			dispatch(getEvents(config));
+		}
 	}
 }
-export const getEventsFromConfig = (configs) => {
+
+export const getEvents = (configs) => {
 	return (dispatch, getState) => {
 
 		dispatch({type: GET_CIRCLE_EVENTS});

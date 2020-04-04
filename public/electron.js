@@ -1,10 +1,28 @@
-const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell, Notification} = require('electron');
+const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell, Notification, ipcMain} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const _ = require('lodash');
+const Store = require('electron-store');
+const store = new Store();
 let mainWindow, tray;
 
 // @link https://getstream.io/blog/takeaways-on-building-a-react-based-app-with-electron/
+
+// IPC Events to Read from the Config File
+ipcMain.on("get", (event, keyName) => {
+	event.sender.send("config", store.get(keyName));
+});
+
+// IPC Events to Write from the Config File
+ipcMain.on("get", (event, keyName) => {
+	event.sender.send("config", store.get(keyName));
+});
+
+// IPC Event to open the config file
+ipcMain.on("open", () => {
+	console.log("Open", store.path);
+	store.openInEditor();
+});
 
 /*
  * Only allow once instance to be open at a time
@@ -89,7 +107,11 @@ function createWindow() {
 		icon: 'logo192.png',
 		show: false,
 		frame: false,
-		alwaysOnTop: true
+		alwaysOnTop: true,
+		webPreferences: {
+			nodeIntegration: true,
+			preload: __dirname + '/preload.js'
+		}
 	});
 
 	mainWindow.setMenu(null);
@@ -167,7 +189,9 @@ function createTaskTray() {
 		tray.on('double-click', showApp);
 
 		const contextMenu = Menu.buildFromTemplate([
-			{label: 'Reload App', click: reloadApp},
+			{label: 'Reload App', click: () => {
+				mainWindow.webContents.reload()
+			}},
 			{type: 'separator'},
 			{label: 'Show', click: showApp},
 			{label: 'Exit', click: exitApp}
@@ -219,10 +243,6 @@ function createMenu () {
 	];
 
 	Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-};
-
-function reloadApp() {
-	mainWindow.webContents.reload();
 }
 
 function showApp() {

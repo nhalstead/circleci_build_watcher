@@ -2,26 +2,19 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import BuildCard from "./components/BuildCard";
 import './App.css';
-import {getCircleEvents, getEventsFromConfig} from "../store/actions/circle_ci";
+import {getEventsFromConfig} from "../store/actions/circle_ci";
 import EmptyCard from "./components/EmptyCard";
 
 class App extends Component {
 
 	componentDidMount() {
 
-		this.getEventsFromConfig();
+		this.props.getEventsFromConfig();
 
 		setInterval(() => {
-			this.getEventsFromConfig();
+			this.props.getEventsFromConfig();
 		}, 10000)
 
-	}
-
-	getEventsFromConfig = () => {
-
-		const configs = [
-		];
-		this.props.getEventsFromConfig(configs);
 	}
 
 	render() {
@@ -64,7 +57,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getCircleEvents: () => dispatch(getCircleEvents()),
 	getEventsFromConfig: (conf) => dispatch(getEventsFromConfig(conf)),
 });
 
