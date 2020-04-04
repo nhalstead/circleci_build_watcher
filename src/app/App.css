@@ -4,7 +4,7 @@ html {
 }
 body {
   background: #373B44;
-  margin: 2px;
+  margin: -2px 2px;
   font-family: "Arial", sans-serif;
   -webkit-user-select: none;
   -webkit-app-region: drag;
@@ -40,7 +40,7 @@ body::-webkit-scrollbar-thumb
   background-color: white;
   border: 1px solid lightgray;
   padding: 4px;
-  margin: 4px 0;
+  margin: 5px 0;
   border-radius: 4px;
 }
 .build_name {

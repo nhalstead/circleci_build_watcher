@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell} = require('electron');
+const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell, Notification} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const _ = require('lodash');
@@ -58,6 +58,7 @@ function app_launch() {
 function createWindow() {
 	let primaryDisplay = screen.getPrimaryDisplay();
 	const height = 300;
+	const minHeight = 178;
 	const width = 300;
 	const gap = 32;
 
@@ -66,7 +67,7 @@ function createWindow() {
 		width,
 		y: (primaryDisplay.size.height - height) - gap,
 		x: (primaryDisplay.size.width - width) - gap,
-		icon: 'src/assets/icon.png',
+		icon: 'logo192.png',
 		show: false,
 		frame: false,
 		alwaysOnTop: true
@@ -123,8 +124,13 @@ function createWindow() {
 	});
 
 	mainWindow.on('resize', _.debounce(() => {
-		const winHeight = mainWindow.getSize()[1];
-		mainWindow.setSize(width, winHeight, true);
+		let newHeight = mainWindow.getSize()[1];
+
+		if(newHeight < minHeight) {
+			newHeight = minHeight;
+		}
+
+		mainWindow.setSize(width, newHeight, true);
 	}, 100));
 }
 
