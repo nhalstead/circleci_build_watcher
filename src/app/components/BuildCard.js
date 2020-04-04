@@ -41,7 +41,7 @@ class BuildCard extends Component {
 			statusText = "Running";
 			statusIcon = runningIcon;
 		}
-		else if(status === "waiting" || status === "not_running" || status === "none") {
+		else if(status === "waiting" || status === "queued" || status === "not_running" || status === "none") {
 			statusCss = "waiting";
 			statusText = "Queued";
 			statusIcon = waitingIcon;
