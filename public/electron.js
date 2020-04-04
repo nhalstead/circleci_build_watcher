@@ -35,7 +35,26 @@ autoUpdater.on('update-available', () => {
 });
 
 autoUpdater.on('update-downloaded', () => {
-	autoUpdater.quitAndInstall();
+	let notification = new Notification({
+		title: "Build Watcher",
+		body: "Updates Downloaded",
+		icon: "logo192.png",
+	});
+
+	notification.on("click", ()=> {
+		dialog.showMessageBox(mainWindow,{
+			type: "question",
+			title: "Steady Readers",
+			message: "Would you like to close and install update?", buttons: ["Ok", "Cancel"]
+		})
+			.then((value)=> {
+				if(value.response === 0){
+					// User Selected "Ok"
+					autoUpdater.quitAndInstall();
+				}
+			});
+	});
+	notification.show();
 });
 
 autoUpdater.on('update-not-available', () => {
