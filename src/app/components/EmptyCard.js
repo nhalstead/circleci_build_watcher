@@ -6,7 +6,7 @@ class EmptyCard extends Component {
 		const {message} = this.props;
 
 		return(
-			<div style={{color: "#cddc39", margin: "50% auto 0 auto"}}>
+			<div style={{color: "#cddc39", margin: "45vh auto 0 auto"}}>
 				<p style={{textAlign: "center", fontSize: "16px"}}>
 					{ message }
 				</p>
