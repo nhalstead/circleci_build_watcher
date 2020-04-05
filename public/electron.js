@@ -3,7 +3,11 @@ const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const _ = require('lodash');
 const Store = require('electron-store');
-const store = new Store();
+const store = new Store({
+	defaults: {
+		endpoints: []
+	}
+});
 let mainWindow, tray;
 
 // @link https://getstream.io/blog/takeaways-on-building-a-react-based-app-with-electron/
@@ -215,17 +219,7 @@ function createMenu () {
 				{ role: 'reload' },
 				{ role: 'forcereload' },
 				{ role: 'toggledevtools' },
-				{ type: 'separator' },
-				{ role: 'resetzoom' },
-				{ role: 'zoomin' },
-				{ role: 'zoomout' },
-				{ type: 'separator' },
-				{ role: 'togglefullscreen' },
 			],
-		},
-		{
-			role: 'window',
-			submenu: [{ role: 'minimize' }, { role: 'close' }],
 		},
 		{
 			role: 'help',
@@ -233,10 +227,16 @@ function createMenu () {
 				{
 					click() {
 						shell.openExternal(
-							'https://github.com/nhalstead',
+							'https://github.com/nhalstead/circleci_build_watcher',
 						);
 					},
 					label: 'File Issue on GitHub',
+				},
+				{
+					click() {
+						store.openInEditor();
+					},
+					label: 'Open Config File',
 				},
 			],
 		},
