@@ -24,6 +24,12 @@ class App extends Component {
 			<div id="content">
 				{events.length !== 0 ? (
 					events.map(event => {
+						let url = `https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/${event.number}/workflows/${event.workflow}/jobs/${event.number}`;
+						if(!event.workflow) {
+							// For Orgs who don't have Pipeline Processing Enabled
+							url = `https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/jobs/${event.number}`;
+						}
+
 						return (
 							<BuildCard
 								key={`card-${event.organization}-${event.repository}-${event.number}`}
@@ -37,7 +43,7 @@ class App extends Component {
 								timestamp={event.timestamp}
 								isPullRequest={event.isPullRequests}
 								pullRequest={event.pullRequest}
-								link={`https://app.circleci.com/pipelines/${event.type}/${event.organization}/${event.repository}/${event.number}/workflows/${event.workflow}/jobs/${event.number}`}
+								link={url}
 							/>
 						)
 					})

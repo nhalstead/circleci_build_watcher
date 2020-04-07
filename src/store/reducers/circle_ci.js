@@ -1,6 +1,7 @@
 import {
 	ERROR_LOADING_CONFIG,
 	GET_CIRCLE_EVENTS,
+	GET_CIRCLE_EVENTS_CATCH,
 	GET_CIRCLE_EVENTS_FAIL,
 	GET_CIRCLE_EVENTS_SUCCESS,
 	SET_CIRCLE_CONFIG
@@ -21,6 +22,7 @@ export default (state = initialState, action) => {
 			return {...state, loading: true, failed: false}
 		case GET_CIRCLE_EVENTS_SUCCESS:
 			return {...state, events: action.payload, loading: false}
+		case GET_CIRCLE_EVENTS_CATCH:
 		case GET_CIRCLE_EVENTS_FAIL:
 			return {...state, error: action.payload, loading: false, failed: true}
 
