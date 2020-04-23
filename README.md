@@ -14,6 +14,11 @@ This tool is a small window that will open up and connect to the CircleCI API us
  
 This tool supports using multiple circle CI accounts/token for when you have many organizations you need to watch builds on.
 
+## Limitations
+
+This will currently setup to show ONLY the latest build in the past 4 hours, in addition to the last 4 builds from each source listed.
+All sorted by the `start_time` (no defined use from CircleCI but resolved to be the start time of the given build).
+
 ## How to start
 
 At this point no releases are available so your only option is to clone the source code from github.
