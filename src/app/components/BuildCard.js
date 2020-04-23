@@ -70,7 +70,7 @@ class BuildCard extends Component {
 					</a>
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
 						<span style={{color: "gray", fontSize: "12px"}}>
-							{ moment(timestamp).fromNow() } on  { this.grabEnd(branch, 25) }
+							{ timestamp ? moment(timestamp).fromNow() + " on " : "Pending build for " }{ this.grabEnd(branch, 25) }
 							{isPullRequest && (
 								<a href={pullRequest.url} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block", paddingLeft: "4px", position: "relative", top: "4px"}}>
 									<PullRequest
