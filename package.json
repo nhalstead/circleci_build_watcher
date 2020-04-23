@@ -19,15 +19,15 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "wait-on": "^4.0.1"
+    "wait-on": "^4.0.2"
   },
   "devDependencies": {
     "concurrently": "^3.6.0",
     "cross-env": "^5.2.0",
-    "electron": "^8.2.0",
+    "electron": "^8.2.3",
+    "electron-builder": "^22.5.1",
     "electron-devtools-installer": "^2.2.4",
-    "electron-is-dev": "^1.1.0",
-    "electron-builder": "^22.4.1"
+    "electron-is-dev": "^1.2.0"
   },
   "scripts": {
     "web-start": "react-scripts start",
@@ -54,6 +54,13 @@
     ]
   },
   "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "nhalstead",
+        "repo": "circleci_build_watcher"
+      }
+    ],
     "appId": "nhalstead.circleciWatcher",
     "productName": "CircleCI Build Watcher",
     "directories": {
@@ -62,12 +69,6 @@
     },
     "extraFiles": [
       "src/assets"
-    ],
-    "publish": [
-      {
-        "provider": "generic",
-        "url": "https://updates.nhalstead.me"
-      }
     ]
   }
 }
