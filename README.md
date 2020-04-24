@@ -39,7 +39,7 @@ Finally you are ready to run, just run the following command to start the UI.
  npm start
 ```
 
-Once it opens up nothing will be in the list so you will need to configure the Json File (UI Config is comming soon).
+Once it opens up nothing will be in the list so you will need to configure the Json File (UI Config is coming soon).
 
 In this project I used `electron-store` which will store the file in one of the following locations:
 
@@ -58,6 +58,7 @@ This config file is loaded on start and is never written to from the application
 The Config file looks like this for simple use.
 You can get the token from your account in each org by going to the following [URL](https://circleci.com/account/api).
 
+##### Filename: `config.json`
 ```json
 {
   "endpoints": [
