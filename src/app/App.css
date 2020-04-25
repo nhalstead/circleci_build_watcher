@@ -7,8 +7,6 @@ body {
   background: #373B44;
   margin: -2px 2px;
   font-family: "Arial", sans-serif;
-  -webkit-user-select: none;
-  -webkit-app-region: drag;
   height: 100%;
 }
 
@@ -136,4 +134,8 @@ a {
   border-radius: 50%;
   opacity: 1;
   margin-left: -2px;
+}
+
+.grab:hover {
+  cursor: grab;
 }
