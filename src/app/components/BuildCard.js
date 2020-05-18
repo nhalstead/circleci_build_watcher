@@ -8,12 +8,17 @@ import unknownIcon from './unknown.svg';
 import {ReactComponent as PullRequest} from './pull_request.svg';
 import moment from "moment";
 
-class BuildCard extends Component {
+const trimName = (input, length = 25, dotTrim = 3) => {
+	return input.length > length ?
+					input.substring(0, length - dotTrim) + "..." :
+					input;
+}
+const grabEnd = (input, length = 25) => {
+	if(input.length > length) return  "..." + input.substring(input.length - (length - 3));
+	return input;
+}
 
-	grabEnd = (input, length) => {
-		if(input.length > length) return  "..." + input.substring(input.length - (length - 3));
-		return input;
-	}
+class BuildCard extends Component {
 
 	render() {
 		const {status, org, repo, buildNumber, author, authorIcon, link, timestamp, branch, isPullRequest, pullRequest} = this.props;
@@ -58,7 +63,7 @@ class BuildCard extends Component {
 						<div className="status-icon">
 							<img src={authorIcon || unknownIcon} className="dashboard-icon" alt={"User Avatar: " + author} />
 						</div>
-						<div className="badge-label">{ author || <i>unknown</i>}</div>
+						<div className="badge-label">{ trimName(author, 12, 2) || <i>unknown</i>}</div>
 					</div>
 					<a href={link || "https://circleci.com"} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block"}}>
 						<div title={statusText} className={statusCss} data-component="frontend.components.pieces.status/badge">
@@ -70,7 +75,7 @@ class BuildCard extends Component {
 					</a>
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
 						<span style={{color: "gray", fontSize: "12px"}}>
-							{ timestamp ? moment(timestamp).fromNow() + " on " : "Pending build for " }{ this.grabEnd(branch, 25) }
+							{ timestamp ? moment(timestamp).fromNow() + " on " : "Pending build for " }{ grabEnd(branch, 25) }
 							{isPullRequest && (
 								<a href={pullRequest.url} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block", paddingLeft: "4px", position: "relative", top: "4px"}}>
 									<PullRequest
