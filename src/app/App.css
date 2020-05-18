@@ -51,8 +51,6 @@ body::-webkit-scrollbar-thumb
 }
 [data-component="frontend.components.pieces.status/badge"] {
   float:left;
-  display: -webkit-box;
-  display: box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
