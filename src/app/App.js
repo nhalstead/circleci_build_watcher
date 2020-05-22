@@ -25,17 +25,17 @@ class App extends Component {
 			<React.Fragment>
 				<div style={{
 					position: "fixed",
-					top: "4px",
-					right: "14px",
+					top: "0",
+					right: "0",
 				}}>
 					<div style={{
 						WebkitAppRegion: "drag",
-						marginTop: "4px",
+						padding: "8px 14px 4px 4px",
 						"&:hover": {
 							cursor: "grab"
 						}
 					}}>
-						<img src={gripLines} alt={"grab window mark"} className={"grab"}/>
+						<img src={gripLines} alt={"grab window mark"} className={"grab"} onDragStart={false}/>
 					</div>
 				</div>
 				<div id="content">
