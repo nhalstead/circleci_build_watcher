@@ -1,6 +1,7 @@
 const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell, Notification, ipcMain} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
+const path = require('path')
 const _ = require('lodash');
 const Store = require('electron-store');
 const store = new Store({
@@ -108,7 +109,7 @@ function createWindow() {
 		width,
 		y: (primaryDisplay.size.height - height) - gap,
 		x: (primaryDisplay.size.width - width) - gap,
-		icon: 'logo192.png',
+		icon: path.join(__dirname, '/logo192.png'),
 		show: false,
 		frame: false,
 		alwaysOnTop: true,
