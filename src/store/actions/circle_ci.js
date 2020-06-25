@@ -18,8 +18,9 @@ export const getEventsFromConfig = () => {
 			// Load Config
 			configStore.get("endpoints")
 				.then((configReceived) => {
-					console.log(configReceived);
+					console.log("%cGot Config", "color:green;font-weight:800");
 					if(!configReceived || configReceived.length === 0) {
+						console.log("%cEmpty Config", "color:orange;font-weight:800");
 						dispatch({type: ERROR_LOADING_CONFIG, payload: "Failed to load config", configReceived});
 					}
 					dispatch({type: SET_CIRCLE_CONFIG, payload: configReceived});
@@ -50,6 +51,7 @@ export const getEvents = (configs) => {
 		}))
 			.then(resp => {
 				if(!resp) {
+					console.log("%cEmpty Response", "color:red;font-weight:800");
 					dispatch({type: GET_CIRCLE_EVENTS_FAIL, payload: "No Payload"})
 					return;
 				}
@@ -101,6 +103,7 @@ export const getEvents = (configs) => {
 				dispatch({type: GET_CIRCLE_EVENTS_SUCCESS, payload: data})
 			})
 			.catch(err => {
+				console.log("%Request Error", err, "color:red;font-weight:800");
 				dispatch({type: GET_CIRCLE_EVENTS_CATCH, payload: err})
 			})
 	}

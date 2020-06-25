@@ -5,6 +5,7 @@ import './App.css';
 import {getEventsFromConfig} from "../store/actions/circle_ci";
 import EmptyCard from "./components/EmptyCard";
 import gripLines from "./grip-lines.svg";
+import {falsed} from "../constants/helpers";
 
 class App extends Component {
 
@@ -35,7 +36,7 @@ class App extends Component {
 							cursor: "grab"
 						}
 					}}>
-						<img src={gripLines} alt={"grab window mark"} className={"grab"} onDragStart={false}/>
+						<img src={gripLines} alt={"grab window mark"} className={"grab"} onDragStart={falsed}/>
 					</div>
 				</div>
 				<div id="content">
