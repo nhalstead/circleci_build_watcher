@@ -1,10 +1,10 @@
 {
   "name": "circleci_build_watcher",
-  "author": "Noah Halstead",
+  "author": "Noah Halstead <nhalstead00@gmail.com>",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Watch CircleCI Builds without the extra tabs in chrome.",
-  "main": "public/electron.js",
+  "main": "src/electron.js",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -36,7 +36,8 @@
     "eject": "react-scripts eject",
     "start": "concurrently \"cross-env BROWSER=none PORT=3933 yarn react-scripts start\" \"wait-on http://localhost:3933 && electron .\"",
     "pack": "electron-builder --dir",
-    "dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always"
+    "dist": "electron-builder --x64 --macos --win --linux -p always",
+    "package": "electron-builder build --linux -c.extraMetadata.main=src/electron.js --publish never"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,6 +55,10 @@
     ]
   },
   "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
     "publish": [
       {
         "provider": "github",
@@ -64,8 +69,30 @@
     "appId": "nhalstead.circleciWatcher",
     "productName": "CircleCI Build Watcher",
     "directories": {
-      "output": "build",
-      "buildResources": "src/assets"
+      "output": "dist",
+      "buildResources": "public"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "category": "Development",
+      "icon": "logo512.png",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     },
     "extraFiles": [
       "src/assets"

@@ -18,18 +18,13 @@ ipcMain.on("get", (event, keyName) => {
 	event.sender.send("config", store.get(keyName));
 });
 
-// IPC Events to Write from the Config File
-ipcMain.on("get", (event, keyName) => {
-	event.sender.send("config", store.get(keyName));
-});
-
 // IPC Event to open the config file
 ipcMain.on("open", () => {
 	console.log("Open", store.path);
 	store.openInEditor();
 });
 
-/*
+/**
  * Only allow once instance to be open at a time
  */
 if (!app.requestSingleInstanceLock()) {
@@ -41,7 +36,7 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
 	showApp();
 });
 
-/*
+/**
  * App entry point & auto update
  */
 app.on('ready', () => {
@@ -109,13 +104,13 @@ function createWindow() {
 		width,
 		y: (primaryDisplay.size.height - height) - gap,
 		x: (primaryDisplay.size.width - width) - gap,
-		icon: path.join(__dirname, '/logo192.png'),
+		icon: path.join(__dirname, '../public/logo192.png'),
 		show: false,
 		frame: false,
 		alwaysOnTop: true,
 		webPreferences: {
 			nodeIntegration: true,
-			preload: __dirname + '/preload.js'
+			preload: __dirname + '/window-preload.js'
 		}
 	});
 
@@ -181,7 +176,7 @@ function createWindow() {
 }
 
 
-/*
+/**
  * Tray specific functions
  */
 function createTaskTray() {
