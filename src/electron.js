@@ -164,6 +164,16 @@ function createWindow() {
 		shell.openExternal(url);
 	});
 
+	mainWindow.on('move', () => {
+		mainWindow.setResizable(false);
+	});
+
+	mainWindow.on('moved', () => {
+		setTimeout(() => {
+			mainWindow.setResizable(true);
+		}, 500);
+	});
+
 	mainWindow.on('resize', _.debounce(() => {
 		let newHeight = mainWindow.getSize()[1];
 
