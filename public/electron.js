@@ -41,7 +41,11 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
  */
 app.on('ready', () => {
 	app.setAppUserModelId('nhalstead.circleciWatcher');
-	autoUpdater.checkForUpdates();
+	autoUpdater.checkForUpdates()
+		.catch(err => {
+			console.log("Error for Checking Updates");
+			console.log(err);
+		})
 });
 
 autoUpdater.on('update-available', () => {
@@ -49,21 +53,22 @@ autoUpdater.on('update-available', () => {
 		type: 'info',
 		title: 'Found Updates',
 		message: 'Found updates, app installing updates and restarting automatically'
-	});
+	})
 });
 
 autoUpdater.on('update-downloaded', () => {
 	let notification = new Notification({
 		title: "Build Watcher",
 		body: "Updates Downloaded",
-		icon: "logo192.png",
+		icon: path.join(__dirname, '../public/logo192.png'),
 	});
 
 	notification.on("click", ()=> {
 		dialog.showMessageBox(mainWindow,{
 			type: "question",
 			title: "Steady Readers",
-			message: "Would you like to close and install update?", buttons: ["Ok", "Cancel"]
+			message: "Would you like to close and install update?",
+			buttons: ["Ok", "Cancel"]
 		})
 			.then((value)=> {
 				if(value.response === 0){
@@ -191,7 +196,7 @@ function createWindow() {
  */
 function createTaskTray() {
 	try {
-		const trayIcon = nativeImage.createFromPath('favicon.ico');
+		const trayIcon = nativeImage.createFromPath(path.join(__dirname, '../public/favicon.ico'));
 		tray = new Tray(trayIcon);
 
 		tray.setToolTip('CircleCI Build Watcher');

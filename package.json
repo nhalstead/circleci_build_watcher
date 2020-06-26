@@ -4,7 +4,8 @@
   "license": "MIT",
   "version": "1.0.1",
   "description": "Watch CircleCI Builds without the extra tabs in chrome.",
-  "main": "src/electron.js",
+  "main": "public/electron.js",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -35,9 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start": "concurrently \"cross-env BROWSER=none PORT=3933 yarn react-scripts start\" \"wait-on http://localhost:3933 && electron .\"",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder --x64 --macos --win --linux -p always",
-    "package": "electron-builder build --linux -c.extraMetadata.main=src/electron.js --publish never"
+    "electron-pack": "--em.main=build/electron.js",
+    "package": "electron-builder build --linux -c.extraMetadata.main=build/electron.js --publish never"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,7 +66,7 @@
         "repo": "circleci_build_watcher"
       }
     ],
-    "appId": "nhalstead.circleciWatcher",
+    "appId": "nhalstead.circleci-watcher",
     "productName": "CircleCI Build Watcher",
     "directories": {
       "output": "dist",
@@ -93,9 +93,6 @@
         "AppImage",
         "deb"
       ]
-    },
-    "extraFiles": [
-      "src/assets"
-    ]
+    }
   }
 }
