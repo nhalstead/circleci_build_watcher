@@ -81,6 +81,7 @@ export const getEvents = (configs) => {
 					return (moment().unix() - moment(elm.start_time).unix()) < (60 * 60 * 4)
 				});
 
+
 				data = data.map(entry => {
 					// Convert this CircleCi Status into a Friendly Status Entry
 					return {
@@ -95,8 +96,9 @@ export const getEvents = (configs) => {
 						title: entry.subject,
 						number: entry.build_num,
 						workflow: entry.workflows ? entry.workflows.workflow_id : null,
+						workflow_job_name: entry.workflows ? entry.workflows.job_name : null,
 						buildUrl: entry.build_url,
-						isPullRequests: (entry.pull_requests.length !== 0),
+						hasPullRequests: (entry.pull_requests.length !== 0),
 						pullRequest: (entry.pull_requests.length !== 0) ? entry.pull_requests[0] : null,
 					}
 				})
