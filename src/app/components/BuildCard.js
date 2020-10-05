@@ -6,7 +6,10 @@ import runningIcon from './running.svg';
 import waitingIcon from './waiting.svg';
 import unknownIcon from './unknown.svg';
 import {ReactComponent as PullRequest} from './pull_request.svg';
-import moment from "moment";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime)
 
 const trimName = (input, length = 25, dotTrim = 3) => {
 	return (input || "").length > length ?
@@ -88,7 +91,7 @@ class BuildCard extends Component {
 					</a>
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
 						<span style={{color: "gray", fontSize: "12px"}}>
-							{ data.timestamp ? moment(data.timestamp).fromNow() + " on " : "Pending build for " }{ grabEnd(data.branch, 25) }
+							{ data.timestamp ? dayjs(data.timestamp).fromNow() + " on " : "Pending build for " }{ grabEnd(data.branch, 25) }
 							{data.hasPullRequests && (
 								<a href={data.pullRequest.url} target="_blank" rel={"noopener noreferrer"} style={{display: "inline-block", paddingLeft: "4px", position: "relative", top: "4px"}}>
 									<PullRequest

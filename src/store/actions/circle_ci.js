@@ -1,6 +1,6 @@
 import {configStore} from "../../constants/store.js";
 import _ from "lodash";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const GET_CIRCLE_EVENTS = "GET_CIRCLE_EVENTS";
 export const GET_CIRCLE_EVENTS_SUCCESS = "GET_CIRCLE_EVENTS_SUCCESS";
@@ -63,8 +63,8 @@ export const getEvents = (configs) => {
 					if(a.start_time === null) return -1;
 					if(b.start_time === null) return 1;
 
-					a = moment(a.start_time).unix();
-					b = moment(b.start_time).unix();
+					a = dayjs(a.start_time).unix();
+					b = dayjs(b.start_time).unix();
 
 					if (a > b) {
 						return -1;
@@ -78,9 +78,8 @@ export const getEvents = (configs) => {
 				// Allow only entries from the last 4 hours to be displayed, or has no Start Time
 				data = _.filter(data, elm => {
 					if(elm.start_time === null) return true;
-					return (moment().unix() - moment(elm.start_time).unix()) < (60 * 60 * 4)
+					return (dayjs().unix() - dayjs(elm.start_time).unix()) < (60 * 60 * 4)
 				});
-
 
 				data = data.map(entry => {
 					// Convert this CircleCi Status into a Friendly Status Entry
