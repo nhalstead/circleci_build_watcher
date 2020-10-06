@@ -25,32 +25,34 @@ class BuildCard extends Component {
 
 	render() {
 		const {data} = this.props;
+		
+		const status = data.status.toLowerCase();
 
 		let statusCss = "unknown";
 		let statusText = "Unknown";
 		let statusIcon = unknownIcon;
 
-		if(data.status === "success") {
+		if(status === "success") {
 			statusCss = "succeeded";
 			statusText = "Success";
 			statusIcon = succeededIcon;
 		}
-		else if(data.status === "failed") {
+		else if(status === "failed") {
 			statusCss = "failed";
 			statusText = "Failed";
 			statusIcon = failedIcon;
 		}
-		else if(data.status === "canceled") {
+		else if(status === "canceled") {
 			statusCss = "canceled";
 			statusText = "Canceled";
 			statusIcon = canceledIcon;
 		}
-		else if(data.status === "running") {
+		else if(status === "running") {
 			statusCss = "running";
 			statusText = "Running";
 			statusIcon = runningIcon;
 		}
-		else if(data.status === "waiting" || data.status === "queued" || data.status === "not_running" || data.status === "none") {
+		else if(status === "waiting" || status === "queued" || status === "not_running" || status === "none") {
 			statusCss = "waiting";
 			statusText = "Queued";
 			statusIcon = waitingIcon;
@@ -86,7 +88,7 @@ class BuildCard extends Component {
 							<div className="status-icon" style={{paddingTop: "4px"}}>
 								<img src={statusIcon} className="css-1rozygh" alt={"Status: " + statusText}/>
 							</div>
-							<div className="badge-label">{ data.status } #{ data.number }</div>
+							<div className="badge-label">{ statusText } #{ data.number }</div>
 						</div>
 					</a>
 					<div style={{marginLeft: "8px", marginTop: "-2px"}}>
