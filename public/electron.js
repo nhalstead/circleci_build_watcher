@@ -1,5 +1,4 @@
 const {app, BrowserWindow, Menu, Tray, nativeImage, dialog, screen, shell, Notification, ipcMain} = require('electron');
-const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const path = require('path')
 const _ = require('lodash');
@@ -41,61 +40,11 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
  */
 app.on('ready', () => {
 	app.setAppUserModelId('nhalstead.circleciWatcher');
-	autoUpdater.checkForUpdates()
-		.catch(err => {
-			console.log("Error for Checking Updates");
-			console.log(err);
-		})
-});
 
-autoUpdater.on('update-available', () => {
-	dialog.showMessageBox({
-		type: 'info',
-		title: 'Found Updates',
-		message: 'Found updates, app installing updates and restarting automatically'
-	})
-});
-
-autoUpdater.on('update-downloaded', () => {
-	let notification = new Notification({
-		title: "Build Watcher",
-		body: "Updates Downloaded",
-		icon: path.join(__dirname, '../public/logo192.png'),
-	});
-
-	notification.on("click", ()=> {
-		dialog.showMessageBox(mainWindow,{
-			type: "question",
-			title: "Steady Readers",
-			message: "Would you like to close and install update?",
-			buttons: ["Ok", "Cancel"]
-		})
-			.then((value)=> {
-				if(value.response === 0){
-					// User Selected "Ok"
-					autoUpdater.quitAndInstall();
-				}
-			});
-	});
-	notification.show();
-});
-
-autoUpdater.on('update-not-available', () => {
-	app_launch();
-});
-
-autoUpdater.on('error', () => {
-	app_launch();
-});
-
-/*
- * App Window Creation Methods
- */
-function app_launch() {
 	createWindow();
 	createTaskTray();
 	createMenu();
-}
+});
 
 function createWindow() {
 	let primaryDisplay = screen.getPrimaryDisplay();
