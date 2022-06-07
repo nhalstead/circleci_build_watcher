@@ -5,7 +5,7 @@ export const configStore = {
 	get: (key) => {
 		ipcRenderer.send("get", key);
 		return new Promise((resolve, reject) => {
-			ipcRenderer.once("config",(event, data) => {
+			ipcRenderer.once("config", (event, data) => {
 				resolve(data);
 			});
 		});

@@ -10,13 +10,12 @@ import {falsed} from "../constants/helpers";
 class App extends Component {
 
 	componentDidMount() {
-
 		this.props.getEventsFromConfig();
 
+		// Set an interval to continue to renew the Events
 		setInterval(() => {
 			this.props.getEventsFromConfig();
 		}, 10000)
-
 	}
 
 	render() {
@@ -51,7 +50,7 @@ class App extends Component {
 						})
 					) : (
 						<EmptyCard
-							message={"No builds to show in the last 4 hours."}
+							message={"No builds to show in the last 8 hours."}
 						/>
 					)}
 				</div>

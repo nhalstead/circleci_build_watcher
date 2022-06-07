@@ -14,20 +14,19 @@ export const getEventsFromConfig = () => {
 	return (dispatch, getState) => {
 		const config = getState().circle_ci.config;
 
-		if(!config || config.length === 0) {
+		if (!config || config.length === 0) {
 			// Load Config
 			configStore.get("endpoints")
 				.then((configReceived) => {
 					console.log("%cGot Config", "color:green;font-weight:800");
-					if(!configReceived || configReceived.length === 0) {
+					if (!configReceived || configReceived.length === 0) {
 						console.log("%cEmpty Config", "color:orange;font-weight:800");
 						dispatch({type: ERROR_LOADING_CONFIG, payload: "Failed to load config", configReceived});
 					}
 					dispatch({type: SET_CIRCLE_CONFIG, payload: configReceived});
 					dispatch(getEvents(configReceived));
 				});
-		}
-		else {
+		} else {
 			dispatch(getEvents(config));
 		}
 	}
@@ -50,7 +49,7 @@ export const getEvents = (configs) => {
 				.then(res => res.json())
 		}))
 			.then(resp => {
-				if(!resp) {
+				if (!resp) {
 					console.log("%cEmpty Response", "color:red;font-weight:800");
 					dispatch({type: GET_CIRCLE_EVENTS_FAIL, payload: "No Payload"})
 					return;
@@ -60,8 +59,8 @@ export const getEvents = (configs) => {
 
 				// Sort to put null dates at the top followed by the start time
 				data = data.sort((a, b) => {
-					if(a.start_time === null) return -1;
-					if(b.start_time === null) return 1;
+					if (a.start_time === null) return -1;
+					if (b.start_time === null) return 1;
 
 					a = dayjs(a.start_time).unix();
 					b = dayjs(b.start_time).unix();
@@ -77,8 +76,8 @@ export const getEvents = (configs) => {
 
 				// Allow only entries from the last 4 hours to be displayed, or has no Start Time
 				data = _.filter(data, elm => {
-					if(elm.start_time === null) return true;
-					return (dayjs().unix() - dayjs(elm.start_time).unix()) < (60 * 60 * 4)
+					if (elm.start_time === null) return true;
+					return (dayjs().unix() - dayjs(elm.start_time).unix()) < (60 * 60 * 8)
 				});
 
 				data = data.map(entry => {
